@@ -32,15 +32,13 @@ function saveForecastHistory() {
     historyText.textContent = savedText;
     historyProbability.textContent = savedProbability;
     forecastItemTemplate.after(forecastHistoryContainer);
-    displayForecast();
 }
 
 function doForecast() {
-    if (currentForecastContainer.textContent.trim() === '') {
-        displayForecast();
-    } else {
+    if (currentForecastContainer.textContent.trim() !== '') {
         saveForecastHistory();
-    }
+    }   
+        displayForecast();
 }
 
 button.addEventListener('click', doForecast)
