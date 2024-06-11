@@ -12,38 +12,34 @@ const forecasts = [
     'День принесет новые возможности для вашего профессионального роста.'
 ];
 
-function generateRandomForecast() {
+function displayForecast() {
     const randomForecastIndex = Math.trunc(Math.random() * forecasts.length);
-    return forecasts[randomForecastIndex];
-}
-
-function displayRandomForecast() {
-    const randomForecast = generateRandomForecast();
+    const randomForecast = forecasts[randomForecastIndex];
     displayedForecast.textContent = randomForecast;
-}
-
-function generateRandomProbability() {
+   
     const randomPercent = Math.round(Math.random() * 100);
     currentProbabilityText.textContent = `Вероятность: ${randomPercent}%`;
 }
 
+function saveForecastHistory() {
+    const forecastHistoryContainer = forecastItemTemplate.content.cloneNode(true);
+    const historyText = forecastHistoryContainer.querySelector('h3');
+    const historyProbability = forecastHistoryContainer.querySelector('p');
+    
+    const savedText = displayedForecast.textContent;
+    const savedProbability = currentProbabilityText.textContent;
+
+    historyText.textContent = savedText;
+    historyProbability.textContent = savedProbability;
+    forecastItemTemplate.after(forecastHistoryContainer);
+    displayForecast();
+}
+
 function doForecast() {
     if (currentForecastContainer.textContent.trim() === '') {
-        displayRandomForecast();
-        generateRandomProbability();
+        displayForecast();
     } else {
-        const forecastHistoryContainer = forecastItemTemplate.content.cloneNode(true);
-        const historyText = forecastHistoryContainer.querySelector('h3');
-        const historyProbability = forecastHistoryContainer.querySelector('p');
-        
-        const savedText = displayedForecast.textContent;
-        const savedProbability = currentProbabilityText.textContent;
-
-        historyText.textContent = savedText;
-        historyProbability.textContent = savedProbability;
-        forecastItemTemplate.after(forecastHistoryContainer);
-        displayRandomForecast();
-        generateRandomProbability();
+        saveForecastHistory();
     }
 }
 
